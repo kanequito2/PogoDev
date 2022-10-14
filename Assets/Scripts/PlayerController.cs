@@ -60,7 +60,6 @@ public class PlayerController : MonoBehaviour
 
     IEnumerator JumpCountdownRoutine()
     {
-        Debug.Log("entro a la rutina");
         yield return new WaitForSeconds(1);
         jumpCooldown = false;
     }
