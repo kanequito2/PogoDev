@@ -7,7 +7,7 @@ public class CameraController : MonoBehaviour
     public Vector3 cameraPosition;
     private GameObject player;
     private float yCameraAdjustmentUpward = 18;
-    private float yCameraAdjustmentDownward = 0.97f;
+    private float yCameraAdjustmentDownward = 0.8f;
     private float yCameraAdjustment = 18;
     // Start is called before the first frame update
     void Start()
@@ -22,7 +22,7 @@ public class CameraController : MonoBehaviour
     }
     void Update()
     {
-        Debug.Log(player.name);
+        
        
     }
     private void CameraAjustment()

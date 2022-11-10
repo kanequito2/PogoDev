@@ -18,24 +18,33 @@ public class PlayerController : MonoBehaviour
     public GameObject JumpTriggerGO;
     private JumpTrigger jumpTriggerScript;
     private Rigidbody playerRB;
+    public bool playerWin = false;
+
+    private GameManager gameManager; 
     // Start is called before the first frame update
     void Start()
     {
         playerRB = GetComponent<Rigidbody>();
         jumpTriggerScript = JumpTriggerGO.GetComponent<JumpTrigger>();
+        gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
     }
 
     // Update is called once per frame
     void Update()
     {        
-        jumpTrigger = jumpTriggerScript.isTriggerUp;
-        PlayerInputs();
-        InOnGroundDetection();
-        PlayerXBounds();
-        PlayerJump();
+        jumpTrigger = jumpTriggerScript.isTriggerUp;            
+        PlayerXBounds();        
         JumpCooldown();
     }
-
+    private void FixedUpdate()
+    {
+        if (gameManager.timerOn)
+        {
+            PlayerInputs();
+            InOnGroundDetection();
+            PlayerJump();
+        }        
+    }
     IEnumerator JumpCountdownRoutine()
     {
         yield return new WaitForSeconds(jumpCooldownTime);
@@ -47,6 +56,10 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.CompareTag("Ground"))
         {
             isOnGround = true;
+        }
+        if (collision.gameObject.CompareTag("Goal"))
+        {
+            playerWin = true;
         }
     }
     private void PlayerXBounds()
