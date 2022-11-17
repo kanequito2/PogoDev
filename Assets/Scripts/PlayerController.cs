@@ -11,7 +11,7 @@ public class PlayerController : MonoBehaviour
     public float jumpInput;
     public bool isOnGround = false;
     public float xRange = 19.5f;
-    public bool jumpCooldown;
+    [SerializeField] private bool jumpCooldown;
     public float jumpCooldownTime = 1;
 
     public bool jumpTrigger;
@@ -20,6 +20,10 @@ public class PlayerController : MonoBehaviour
     private Rigidbody playerRB;
     public bool playerWin = false;
 
+    [SerializeField] private AudioClip jumpSound;
+    private AudioSource playerAudio;
+    [SerializeField] private float volumenAudio = 1.0f;
+
     private GameManager gameManager; 
     // Start is called before the first frame update
     void Start()
@@ -27,6 +31,7 @@ public class PlayerController : MonoBehaviour
         playerRB = GetComponent<Rigidbody>();
         jumpTriggerScript = JumpTriggerGO.GetComponent<JumpTrigger>();
         gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
+        playerAudio = gameObject.GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -86,6 +91,7 @@ public class PlayerController : MonoBehaviour
     {
         playerRB.velocity = new Vector3(playerRB.velocity.x, 0, playerRB.velocity.z);
         playerRB.AddForce(Vector3.up * force, ForceMode.Impulse);
+        playerAudio.PlayOneShot(jumpSound, volumenAudio);
     }
     private void SideForce(float force)
     {
